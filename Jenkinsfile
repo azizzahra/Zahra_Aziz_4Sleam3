@@ -2,29 +2,27 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials') // ID exact dans Jenkins
-        IMAGE_NAME = "azizzahra/student-management"
+        DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials') 
+        IMAGE_NAME = "zahraaziz/student-management"
         IMAGE_TAG = "${BUILD_NUMBER}"
     }
 
     stages {
         stage('GIT') {
             steps {
-                git branch: 'main',  // tu es sur la branche "main" maintenant
+                git branch: 'main', 
                     url: 'https://github.com/azizzahra/Zahra_Aziz_4Sleam3.git'
             }
         }
 
         stage('Compile & Package') {
             steps {
-                // TOUT EST À LA RACINE → pas de dir()
                 sh 'mvn clean package -DskipTests'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                // Dockerfile est à la racine → pas de dir()
                 sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
                 sh "docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${IMAGE_NAME}:latest"
             }
