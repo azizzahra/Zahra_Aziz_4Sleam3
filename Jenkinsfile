@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
-        IMAGE_NAME = "azizzahra/student-management"
+        IMAGE_NAME = "zahraaziz/student-management"
         IMAGE_TAG = "${BUILD_NUMBER}"
         SONAR_TOKEN = credentials('sonarqube-token')  // ID du token dans Jenkins
     }
