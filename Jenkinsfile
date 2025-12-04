@@ -2,15 +2,16 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials') 
-        IMAGE_NAME = "zahraaziz/student-management"
+        DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
+        IMAGE_NAME = "azizzahra/student-management"
         IMAGE_TAG = "${BUILD_NUMBER}"
+        SONAR_TOKEN = credentials('sonarqube-token')  // ID du token dans Jenkins
     }
 
     stages {
         stage('GIT') {
             steps {
-                git branch: 'main', 
+                git branch: 'main',
                     url: 'https://github.com/azizzahra/Zahra_Aziz_4Sleam3.git'
             }
         }
@@ -18,6 +19,19 @@ pipeline {
         stage('Compile & Package') {
             steps {
                 sh 'mvn clean package -DskipTests'
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('sonarqube-local') {  // nom du serveur configuré
+                    sh '''
+                        mvn sonar:sonar \
+                          -Dsonar.projectKey=student-management-zahra \
+                          -Dsonar.host.url=http://localhost:9000 \
+                          -Dsonar.login=${SONAR_TOKEN}
+                    '''
+                }
             }
         }
 
