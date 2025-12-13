@@ -29,6 +29,8 @@ spec:
       labels:
         app: spring-app
     spec:
+      imagePullSecrets:
+      - name: docker-hub-secret
       containers:
       - name: spring-app
         image: zahraaziz/student-management:latest
