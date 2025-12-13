@@ -36,7 +36,7 @@ spec:
         image: zahraaziz/student-management:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 8080
+        - containerPort: 8089
         envFrom:
         - configMapRef:
             name: spring-config
@@ -51,7 +51,7 @@ spec:
   selector:
     app: spring-app
   ports:
-  - port: 8080
-    targetPort: 8080
-    nodePort: 30080
+  - port: 8089
+    targetPort: 8089
+    nodePort: 30089
   type: NodePort
