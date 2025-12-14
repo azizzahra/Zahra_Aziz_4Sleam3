@@ -12,6 +12,15 @@ spec:
     path: "/data/mysql"
 ---
 apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-secret
+type: Opaque
+data:
+  MYSQL_ROOT_PASSWORD: cm9vdDEyMw==
+  MYSQL_DATABASE: c3ByaW5nZGI=
+---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pvc
@@ -39,11 +48,17 @@ spec:
       containers:
       - name: mysql
         image: mysql:8.0
-        env:
-        - name: MYSQL_ROOT_PASSWORD
-          value: root123
-        - name: MYSQL_DATABASE
-          value: springdb
+	env:
+	- name: MYSQL_ROOT_PASSWORD
+	  valueFrom:
+	    secretKeyRef:
+	      name: mysql-secret
+	      key: MYSQL_ROOT_PASSWORD
+	- name: MYSQL_DATABASE
+	  valueFrom:
+	    secretKeyRef:
+	      name: mysql-secret
+	      key: MYSQL_DATABASE
         ports:
         - containerPort: 3306
         volumeMounts:
