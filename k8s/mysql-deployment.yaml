@@ -12,15 +12,6 @@ spec:
     path: "/data/mysql"
 ---
 apiVersion: v1
-kind: Secret
-metadata:
-  name: mysql-secret
-type: Opaque
-data:
-  MYSQL_ROOT_PASSWORD: cm9vdDEyMw==
-  MYSQL_DATABASE: c3ByaW5nZGI=
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pvc
