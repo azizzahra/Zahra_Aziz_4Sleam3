@@ -5,6 +5,8 @@ metadata:
   name: spring-config
 data:
   SPRING_DATASOURCE_URL: jdbc:mysql://mysql-service:3306/springdb
+  SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+
 ---
 apiVersion: v1
 kind: Secret

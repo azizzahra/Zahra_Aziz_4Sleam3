@@ -22,6 +22,15 @@ spec:
     requests:
       storage: 1Gi
 ---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-secret
+type: Opaque
+data:
+  MYSQL_ROOT_PASSWORD: cm9vdDEyMw==
+  MYSQL_DATABASE: c3ByaW5nZGI=
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -40,10 +49,17 @@ spec:
       - name: mysql
         image: mysql:8.0
         env:
+        env:
         - name: MYSQL_ROOT_PASSWORD
-          value: root123
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_ROOT_PASSWORD
         - name: MYSQL_DATABASE
-          value: springdb
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_DATABASE
         ports:
         - containerPort: 3306
         volumeMounts:
