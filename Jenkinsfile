@@ -24,7 +24,7 @@ pipeline {
                     sh """
                         mvn sonar:sonar \\
                           -Dsonar.projectKey=student-management-zahra \\
-                          -Dsonar.host.url=http://localhost:9000 \\
+                          -Dsonar.host.url=http://172.26.211.110:9000 \\
                           -Dsonar.login=${SONAR_TOKEN}
                     """
                 }
