@@ -21,12 +21,13 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube-local') {
-                    sh """
-                        mvn sonar:sonar \\
-                          -Dsonar.projectKey=student-management-zahra \\
-                          -Dsonar.host.url=http://172.26.211.110:9000 \\
-                          -Dsonar.login=${SONAR_TOKEN}
-                    """
+                sh """
+                    mvn sonar:sonar \\
+                      -Dsonar.projectKey=azizzahra_Zahra_Aziz_4Sleam3 \\
+                      -Dsonar.organization=azizzahra \\
+                      -Dsonar.host.url=https://sonarcloud.io \\
+                      -Dsonar.login=${SONAR_TOKEN}
+                """
                 }
             }
         }
